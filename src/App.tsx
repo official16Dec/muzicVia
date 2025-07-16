@@ -7,7 +7,7 @@
 
 import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View, Text } from 'react-native';
-import SplashScreen from './SplashScreen';
+import SplashScreen from './splash/SplashScreen';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';

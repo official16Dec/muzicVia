@@ -71,7 +71,7 @@ const SplashScreen = ({ onAnimationComplete }: SplashScreenProps) => {
       
       {/* Background Image */}
       <ImageBackground
-        source={require('./assets/splash_background.png')} // Replace with your background image path
+        source={require('../../assets/splash_background.png')} // Replace with your background image path
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -89,7 +89,7 @@ const SplashScreen = ({ onAnimationComplete }: SplashScreenProps) => {
               },
             ]}>
             <Image
-              source={require('./assets/muzicvia_logo.png')} // Replace with your logo path
+              source={require('../../assets/muzicvia_logo.png')} // Replace with your logo path
               style={styles.logo}
               resizeMode="contain"
             />
@@ -107,7 +107,7 @@ const SplashScreen = ({ onAnimationComplete }: SplashScreenProps) => {
               },
             ]}>
           <Image
-              source={require('./assets/muzicvia_banner.png')} // Replace with your logo path
+              source={require('../../assets/muzicvia_banner.png')} // Replace with your logo path
               style={styles.banner}
             />
           </Animated.View>
