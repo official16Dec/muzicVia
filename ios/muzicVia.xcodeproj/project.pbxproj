@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-muzicVia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-muzicVia.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		242F460034B5498DAC44BEDF /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 234EFAE99EF04523A0BC48BE /* BootSplash.storyboard */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		90D33D8CDBCC9F30111BF5A8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		242F460034B5498DAC44BEDF /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 234EFAE99EF04523A0BC48BE /* BootSplash.storyboard */; };
 		97E210CA655A44A48ADC04DA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD1A2990DE844639BBAE00AD /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -21,14 +21,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = muzicVia/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = muzicVia/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = muzicVia/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		234EFAE99EF04523A0BC48BE /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = muzicVia/BootSplash.storyboard; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-muzicVia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muzicVia.debug.xcconfig"; path = "Target Support Files/Pods-muzicVia/Pods-muzicVia.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-muzicVia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muzicVia.release.xcconfig"; path = "Target Support Files/Pods-muzicVia/Pods-muzicVia.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-muzicVia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-muzicVia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = muzicVia/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = muzicVia/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DD1A2990DE844639BBAE00AD /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = muzicVia/Colors.xcassets; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		234EFAE99EF04523A0BC48BE /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "muzicVia/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DD1A2990DE844639BBAE00AD /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "muzicVia/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

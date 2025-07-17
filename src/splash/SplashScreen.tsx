@@ -17,6 +17,7 @@ interface SplashScreenProps {
 }
 
 const SplashScreen = ({ onAnimationComplete }: SplashScreenProps) => {
+  
   const logoScale = useRef(new Animated.Value(0)).current;
   const logoOpacity = useRef(new Animated.Value(0)).current;
   const textOpacity = useRef(new Animated.Value(0)).current;
@@ -73,8 +74,7 @@ const SplashScreen = ({ onAnimationComplete }: SplashScreenProps) => {
       <ImageBackground
         source={require('../../assets/splash_background.png')} // Replace with your background image path
         style={styles.backgroundImage}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* Dark overlay for better contrast */}
         <View style={styles.overlay} />
         
