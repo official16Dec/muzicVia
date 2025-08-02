@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   StatusBar,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -65,13 +66,81 @@ const DashboardScreen = () => {
 
         {/* Main Content Area */}
         <View style={styles.content}>
-          {/* You can add your main dashboard content here */}
-          <Text style={styles.welcomeText}>Welcome to MuzicVia</Text>
+          <FlatList 
+            data={persons}
+            renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+          />
         </View>
       </ImageBackground>
     </SafeAreaView>
   );
 };
+
+const persons = [
+  {
+	id: "1",
+	name: "Earnest Green",
+  },
+  {
+	id: "2",
+	name: "Winston Orn",
+  },
+  {
+	id: "3",
+	name: "Carlton Collins",
+  },
+  {
+	id: "4",
+	name: "Malcolm Labadie",
+  },
+  {
+	id: "5",
+	name: "Michelle Dare",
+  },
+  {
+	id: "6",
+	name: "Carlton Zieme",
+  },
+  {
+	id: "7",
+	name: "Jessie Dickinson",
+  },
+  {
+	id: "8",
+	name: "Julian Gulgowski",
+  },
+  {
+	id: "9",
+	name: "Ellen Veum",
+  },
+  {
+	id: "10",
+	name: "Lorena Rice",
+  },
+
+  {
+	id: "11",
+	name: "Carlton Zieme",
+  },
+  {
+	id: "12",
+	name: "Jessie Dickinson",
+  },
+  {
+	id: "13",
+	name: "Julian Gulgowski",
+  },
+  {
+	id: "14",
+	name: "Ellen Veum",
+  },
+  {
+	id: "15",
+	name: "Lorena Rice",
+  },
+];
 
 const styles = StyleSheet.create({
   container: {
@@ -87,16 +156,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 14,
+    paddingHorizontal: 20,
     paddingTop: 14,
     paddingBottom: 10,
+    backgroundColor: '#0d0d2f5f'
   },
   logoContainer: {
     flex: 0.2,
   },
   logo: {
-    width: 48,
-    height: 48,
+    width: 52,
+    height: 52,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -111,7 +181,7 @@ const styles = StyleSheet.create({
   },
   title:{
     width: 180,
-    height: 56,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -140,6 +210,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     opacity: 0.8,
   },
+  item: {
+    padding: 20,
+    fontSize: 20,
+    marginTop: 5,
+    color: '#fff',
+  }
 });
 
 export default DashboardScreen;
