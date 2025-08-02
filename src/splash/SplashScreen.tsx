@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.1, // Adjust based on your design
   },
   logo: {
-    width: 160,
-    height: 160,
+    width: 120,
+    height: 120,
   },
   banner: {
     width: 200,
