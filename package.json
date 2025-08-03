@@ -13,7 +13,9 @@
     "@react-native/new-app-screen": "0.80.1",
     "react": "19.1.0",
     "react-native": "0.80.1",
-    "react-native-bootsplash": "^6.3.10"
+    "react-native-bootsplash": "^6.3.10",
+    "react-native-fs": "^2.20.0",
+    "react-native-permissions": "^5.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
