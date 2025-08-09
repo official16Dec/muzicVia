@@ -42,10 +42,7 @@ const AudioScreen: React.FC<AudioScreenProps> = ({ route }) => {
               
             </View>
           </View>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-              <Text style={styles.backButtonText}>{''}</Text>
-            </TouchableOpacity>
+          <View style={styles.subHeader}>
             <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text>
           </View>
           <AudioPlayer audioPath={audioUri} />
@@ -72,6 +69,16 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 10,
     backgroundColor: '#0d0d2f5f',
+  },
+  subHeader: {
+    overflow: 'hidden',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: '#0d0d2f5f',
+    paddingHorizontal: 20,
   },
   backButton: {
     paddingRight: 10,

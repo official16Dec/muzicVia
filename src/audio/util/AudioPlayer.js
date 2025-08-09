@@ -184,7 +184,13 @@ const AudioPlayer = ({ audioPath }) => {
             onPress={stop}
             disabled={!sound || isLoading}
           >
-            <Icon name="stop" size={30} color={!sound || isLoading ? '#CCC' : '#333'} />
+            <Image source={require('../../../assets/icons/stop.png')}
+              style={{ 
+                width: 20, 
+                height: 20, 
+                tintColor: !sound || isLoading ? '#CCC' : '#fff' 
+              }}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={[audioPlayerStyles.controlButton, audioPlayerStyles.playButton]}
@@ -194,11 +200,9 @@ const AudioPlayer = ({ audioPath }) => {
             {isLoading ? (
               <Icon name="hourglass-empty" size={40} color="#FFF" />
             ) : (
-              <Icon
-                name={isPlaying ? "pause" : "play-arrow"}
-                size={40}
-                color="#FFF"
-              />
+             <Image
+              source={isPlaying ? require('../../../assets/icons/pause.png') : require('../../../assets/icons/play.png')}
+              style={{ width: 24, height: 24, tintColor: '#FFF' }}/>
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -211,7 +215,14 @@ const AudioPlayer = ({ audioPath }) => {
             }}
             disabled={!sound || isLoading}
           >
-            <Icon name="forward-10" size={30} color={!sound || isLoading ? '#CCC' : '#333'} />
+            <Image
+              source={require('../../../assets/icons/forward.png')}
+              style={{ 
+                width: 20, 
+                height: 20, 
+                tintColor: !sound || isLoading ? '#CCC' : '#fff' 
+              }}
+            />
           </TouchableOpacity>
         </View>
         {!sound && (
@@ -254,7 +265,7 @@ const audioPlayerStyles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#fff',
     textAlign: 'center',
   },
   progressContainer: {
@@ -291,19 +302,19 @@ const audioPlayerStyles = StyleSheet.create({
     padding: 15,
     marginHorizontal: 10,
     borderRadius: 50,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#dd7322a9',
     alignItems: 'center',
     justifyContent: 'center',
   },
   playButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#dd7322a9',
     width: 80,
     height: 80,
     borderRadius: 40,
     marginHorizontal: 20,
   },
   loadButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#dd7322a9',
     padding: 15,
     borderRadius: 10,
     marginTop: 20,
