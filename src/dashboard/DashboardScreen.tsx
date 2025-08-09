@@ -17,8 +17,22 @@ import {
 } from 'react-native';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import RNFS from 'react-native-fs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 
 const { width, height } = Dimensions.get('window');
+const Stack = createStackNavigator();
+
+type RootStackParamList = {
+  DashboardScreen: undefined;
+  AudioScreen: {
+    audioUri: string;
+    title: string;
+  };
+};
 
 const DashboardScreen = () => {
   type MusicFile = {
@@ -32,6 +46,7 @@ const DashboardScreen = () => {
   const [musicFiles, setMusicFiles] = useState<MusicFile[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasPermission, setHasPermission] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     requestStoragePermission();
@@ -41,9 +56,8 @@ const DashboardScreen = () => {
     try {
       if (Platform.OS === 'android') {
         const androidVersion = Platform.Version;
-        
+
         if (androidVersion >= 33) {
-          // Android 13+ (API 33+) - Request READ_MEDIA_AUDIO
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
             {
@@ -54,7 +68,6 @@ const DashboardScreen = () => {
               buttonPositive: 'OK',
             }
           );
-          
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             setHasPermission(true);
             scanForMusicFiles();
@@ -64,10 +77,9 @@ const DashboardScreen = () => {
             Alert.alert('Permission Denied', 'Audio files permission is required to access music files.');
           }
         } else if (androidVersion >= 30) {
-          // Android 11+ (API 30+) - Request MANAGE_EXTERNAL_STORAGE for full access
           try {
             const manageGranted = await PermissionsAndroid.request(
-              'android.permission.MANAGE_EXTERNAL_STORAGE',
+              PermissionsAndroid.PERMISSIONS.MANAGE_EXTERNAL_STORAGE,
               {
                 title: 'Storage Management Permission',
                 message: 'App needs full storage access to read music files from all directories',
@@ -76,12 +88,10 @@ const DashboardScreen = () => {
                 buttonPositive: 'OK',
               }
             );
-            
             if (manageGranted === PermissionsAndroid.RESULTS.GRANTED) {
               setHasPermission(true);
               scanForMusicFiles();
             } else {
-              // Fall back to READ_EXTERNAL_STORAGE for limited access
               const readGranted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
                 {
@@ -92,7 +102,6 @@ const DashboardScreen = () => {
                   buttonPositive: 'OK',
                 }
               );
-              
               if (readGranted === PermissionsAndroid.RESULTS.GRANTED) {
                 setHasPermission(true);
                 scanForMusicFiles();
@@ -114,7 +123,6 @@ const DashboardScreen = () => {
                 buttonPositive: 'OK',
               }
             );
-            
             if (readGranted === PermissionsAndroid.RESULTS.GRANTED) {
               setHasPermission(true);
               scanForMusicFiles();
@@ -125,7 +133,6 @@ const DashboardScreen = () => {
             }
           }
         } else {
-          // Android 10 and below - Use READ_EXTERNAL_STORAGE
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
             {
@@ -136,7 +143,6 @@ const DashboardScreen = () => {
               buttonPositive: 'OK',
             }
           );
-          
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             setHasPermission(true);
             scanForMusicFiles();
@@ -147,7 +153,6 @@ const DashboardScreen = () => {
           }
         }
       } else {
-        // iOS permission handling
         const result = await request(PERMISSIONS.IOS.MEDIA_LIBRARY);
         if (result === RESULTS.GRANTED) {
           setHasPermission(true);
@@ -168,29 +173,22 @@ const DashboardScreen = () => {
     try {
       setLoading(true);
       const musicExtensions = ['.mp3', '.m4a', '.wav', '.flac', '.aac', '.ogg'];
-      const musicFiles = [];
-
-      // Get Android version to determine scanning approach
+      const musicFiles: any[] = [];
       const androidVersion = Platform.OS === 'android' ? Platform.Version : 0;
-
       let musicDirectories = [];
 
       if (Platform.OS === 'android' && androidVersion >= 30) {
-        // Android 11+ (API 30+) - Use scoped storage paths
         musicDirectories = [
           RNFS.ExternalStorageDirectoryPath + '/Music',
           RNFS.ExternalStorageDirectoryPath + '/Download',
           RNFS.ExternalStorageDirectoryPath + '/Downloads',
           RNFS.DocumentDirectoryPath,
-          // Add app-specific external storage
           RNFS.ExternalDirectoryPath,
-          // Common user accessible directories
           '/storage/emulated/0/Music',
           '/storage/emulated/0/Download',
           '/storage/emulated/0/Downloads',
         ];
       } else {
-        // Android 10 and below, or iOS
         musicDirectories = [
           RNFS.ExternalStorageDirectoryPath + '/Music',
           RNFS.ExternalStorageDirectoryPath + '/Download',
@@ -210,12 +208,10 @@ const DashboardScreen = () => {
         }
       }
 
-      // For Android 11+, also try to scan using MediaStore-like approach
       if (Platform.OS === 'android' && androidVersion >= 30 && musicFiles.length === 0) {
         await scanUsingAlternativeMethod(musicFiles, musicExtensions);
       }
 
-      // Remove duplicates based on file path
       const uniqueMusicFiles = musicFiles.filter((file, index, self) =>
         index === self.findIndex(f => f.path === file.path)
       );
@@ -231,16 +227,14 @@ const DashboardScreen = () => {
 
   const scanUsingAlternativeMethod = async (musicFiles: any[], extensions: string | string[]) => {
     try {
-      // Try to scan the root external storage with limited depth
       const rootPath = '/storage/emulated/0';
       const commonFolders = ['Music', 'Download', 'Downloads', 'AudioBooks', 'Podcasts'];
-      
       for (const folder of commonFolders) {
         const folderPath = `${rootPath}/${folder}`;
         try {
           const exists = await RNFS.exists(folderPath);
           if (exists) {
-            await scanDirectory(folderPath, musicFiles, extensions, 2); // Limit depth to 2
+            await scanDirectory(folderPath, musicFiles, extensions, 2);
           }
         } catch (error) {
           console.log(`Error scanning ${folderPath}:`, error);
@@ -251,27 +245,21 @@ const DashboardScreen = () => {
     }
   };
 
-
   const scanDirectory = async (directory: string, musicFiles: any[], extensions: string | string[], maxDepth = 3, currentDepth = 0) => {
     try {
-      // Prevent infinite recursion and limit scanning depth
       if (currentDepth >= maxDepth) {
         return;
       }
-
       const files = await RNFS.readDir(directory);
-      
       for (const file of files) {
         if (file.isDirectory()) {
-          // Recursively scan subdirectories with depth limit
           await scanDirectory(file.path, musicFiles, extensions, maxDepth, currentDepth + 1);
         } else {
-          // Check if file has music extension
           const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
           if (extensions.includes(fileExtension)) {
             musicFiles.push({
               id: file.path,
-              name: file.name.replace(/\.[^/.]+$/, ""), // Remove extension
+              name: file.name.replace(/\.[^/.]+$/, ""),
               path: file.path,
               size: file.size,
               extension: fileExtension,
@@ -288,10 +276,14 @@ const DashboardScreen = () => {
     console.log('Notification pressed');
   };
 
-  const handleMusicPress = (musicItem: { name: any; }) => {
+  const handleMusicPress = (musicItem: { name: string; path: string; }) => {
     console.log('Music pressed:', musicItem.name);
-    // Here you can implement music playback functionality
-    Alert.alert('Music Selected', `Selected: ${musicItem.name}`);
+    console.log('Music path:', musicItem.path);
+    // Navigate to AudioScreen and pass the music item details
+    navigation.navigate('AudioScreen', {
+      audioUri: musicItem.path,
+      title: musicItem.name,
+    });
   };
 
   const handleRefresh = () => {
@@ -303,13 +295,13 @@ const DashboardScreen = () => {
   };
 
   const renderMusicItem = ({ item }: { item: MusicFile }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.musicItem}
       onPress={() => handleMusicPress(item)}
     >
       <View style={styles.musicItemContent}>
         <Image
-          source={require('../../assets/muzicvia_logo.png')} // Add a music icon to your assets
+          source={require('../../assets/muzicvia_logo.png')}
           style={styles.musicIcon}
           defaultSource={require('../../assets/muzicvia_logo.png')}
         />
@@ -328,12 +320,12 @@ const DashboardScreen = () => {
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
       <Image
-        source={require('../../assets/muzicvia_logo.png')} // Add a "no music" icon to your assets
+        source={require('../../assets/muzicvia_logo.png')}
         style={styles.emptyIcon}
       />
       <Text style={styles.emptyText}>No Music Files Found</Text>
       <Text style={styles.emptySubtext}>
-        {!hasPermission 
+        {!hasPermission
           ? 'Please grant storage permission to access your music files.'
           : 'No music files were found in your device storage.'
         }
@@ -349,30 +341,27 @@ const DashboardScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#1a1a2e" />
-      
+
       <ImageBackground
         source={require('../../assets/splash_background.png')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        {/* Header */}
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Image 
+            <Image
               source={require('../../assets/muzicvia_logo.png')}
               style={styles.logo}
               resizeMode="contain"
             />
           </View>
-          
           <View style={styles.textContainer}>
             <Image
               source={require('../../assets/muzicvia_banner.png')}
               style={styles.title}
             />
           </View>
-          
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.notificationButton}
             onPress={handleNotificationPress}
           >
@@ -383,7 +372,6 @@ const DashboardScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Main Content Area */}
         <View style={styles.content}>
           {loading ? (
             <View style={styles.loadingContainer}>
@@ -391,7 +379,7 @@ const DashboardScreen = () => {
               <Text style={styles.loadingText}>Scanning music files...</Text>
             </View>
           ) : musicFiles.length > 0 ? (
-            <FlatList 
+            <FlatList
               data={musicFiles}
               renderItem={renderMusicItem}
               keyExtractor={(item) => item.id}
@@ -424,7 +412,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 14,
     paddingBottom: 10,
-    backgroundColor: '#0d0d2f5f'
+    backgroundColor: '#0d0d2f5f',
   },
   logoContainer: {
     flex: 0.2,
@@ -435,7 +423,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 0.6,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     width: 180,
