@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StatusBar, TouchableOpacity, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import AudioPlayer from './util/AudioPlayer';
 import { useNavigation } from '@react-navigation/native';
+import MarqueeText from '../marquee/MarqueeText';
 
 type AudioScreenProps = {
   route: {
@@ -38,12 +39,12 @@ const AudioScreen: React.FC<AudioScreenProps> = ({ route }) => {
                 style={styles.title}
               />
             </View>
-            <View style={styles.logoContainer}>
-              
+            <View style={styles.notificationButton}>
             </View>
           </View>
           <View style={styles.subHeader}>
-            <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text>
+            {/* <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text> */}
+            <MarqueeText text={title} style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }} />
           </View>
           <AudioPlayer audioPath={audioUri} />
       </ImageBackground>
@@ -66,9 +67,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: 14,
-    paddingBottom: 10,
+    paddingVertical: 10,
     backgroundColor: '#0d0d2f5f',
+  },
+  logoContainer: {
+    flex: 0.2,
+  },
+  logo: {
+    width: 52,
+    height: 52,
+  },
+  textContainer: {
+    flex: 0.6,
+    alignItems: 'center',
+  },
+  title: {
+    width: 180,
+    height: 36,
+  },
+  notificationButton: {
+    flex: 0.2,
+    alignItems: 'flex-end',
+  },
+  notificationIcon: {
+    width: 32,
+    height: 32,
   },
   subHeader: {
     overflow: 'hidden',
@@ -92,22 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     flex: 1,
-  },
-  logoContainer: {
-    flex: 0.2,
-  },
-  logo: {
-    width: 52,
-    height: 52,
-  },
-  textContainer: {
-    flex: 0.6,
-    alignItems: 'center',
-  },
-  title: {
-    width: 180,
-    height: 48,
-  },
+  }
 });
 
 export default AudioScreen;

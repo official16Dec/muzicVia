@@ -363,8 +363,7 @@ const DashboardScreen = () => {
           </View>
           <TouchableOpacity
             style={styles.notificationButton}
-            onPress={handleNotificationPress}
-          >
+            onPress={handleNotificationPress}>
             <Image
               source={require('../../assets/notification_icon.png')}
               style={styles.notificationIcon}
@@ -410,8 +409,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: 14,
-    paddingBottom: 10,
+    paddingVertical: 10,
     backgroundColor: '#0d0d2f5f',
   },
   logoContainer: {
@@ -427,15 +425,15 @@ const styles = StyleSheet.create({
   },
   title: {
     width: 180,
-    height: 48,
+    height: 36,
   },
   notificationButton: {
     flex: 0.2,
     alignItems: 'flex-end',
   },
   notificationIcon: {
-    width: 35,
-    height: 35,
+    width: 32,
+    height: 32,
   },
   content: {
     flex: 1,
