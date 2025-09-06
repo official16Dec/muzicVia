@@ -21,6 +21,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import MaterialSwitch from '../switch/MaterialSwitch';
 
 
 const { width, height } = Dimensions.get('window');
@@ -47,6 +48,7 @@ const DashboardScreen = () => {
   const [loading, setLoading] = useState(true);
   const [hasPermission, setHasPermission] = useState(false);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [isOnlineMode, setIsOnlineMode] = useState(true);
 
   useEffect(() => {
     requestStoragePermission();
@@ -272,8 +274,44 @@ const DashboardScreen = () => {
     }
   };
 
-  const handleNotificationPress = () => {
-    console.log('Notification pressed');
+  const toggleMode = () => {
+    setIsOnlineMode(previousState => !previousState);
+    // You can add logic here to fetch data based on the mode
+    if (!isOnlineMode) {
+      // Switching to online mode - fetch from server
+      fetchDataFromServer();
+    } else {
+      // Switching to offline mode - use local files
+      if (hasPermission) {
+        scanForMusicFiles();
+      } else {
+        requestStoragePermission();
+      }
+    }
+  };
+
+  const fetchDataFromServer = async () => {
+    setLoading(true);
+    try {
+      // Implement your server API call here
+      // For example:
+      // const response = await fetch('YOUR_SERVER_ENDPOINT');
+      // const serverData = await response.json();
+      // setMusicFiles(serverData);
+      
+      // For now, we'll just show a message
+      Alert.alert('Online Mode', 'Fetching data from server...');
+      // Simulate loading
+      setTimeout(() => {
+        setLoading(false);
+        // In a real app, you would set the music files from server response
+        // setMusicFiles(serverData);
+      }, 1000);
+    } catch (error) {
+      console.error('Error fetching from server:', error);
+      setLoading(false);
+      Alert.alert('Error', 'Failed to fetch data from server.');
+    }
   };
 
   const handleMusicPress = (musicItem: { name: string; path: string; }) => {
@@ -361,14 +399,15 @@ const DashboardScreen = () => {
               style={styles.title}
             />
           </View>
-          <TouchableOpacity
-            style={styles.notificationButton}
-            onPress={handleNotificationPress}>
-            <Image
-              source={require('../../assets/notification_icon.png')}
-              style={styles.notificationIcon}
+          <View style={styles.modeSwitchContainer}>
+            <MaterialSwitch
+              value={isOnlineMode}
+              onValueChange={toggleMode}
             />
-          </TouchableOpacity>
+            <Text style={styles.modeLabel}>
+              {isOnlineMode ? 'Online' : 'Offline'}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.content}>
@@ -523,6 +562,17 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  modeSwitchContainer: {
+    flex: 0.2,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  modeLabel: {
+    color: '#fff',
+    fontSize: 12,
+    marginTop: 4,
+    fontWeight: '500',
   },
 });
 

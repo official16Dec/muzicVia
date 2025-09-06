@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   text: {
-    paddingLeft: 10, // A little spacing at the start
+    paddingHorizontal: 5, // A little spacing at the start
   },
 });
 

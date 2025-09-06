@@ -12,6 +12,7 @@ import {
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MarqueeText from '../../marquee/MarqueeText';
 
 const { width: audioPlayerWidth } = Dimensions.get('window');
 
@@ -27,7 +28,7 @@ const AudioPlayer = ({ audioPath }) => {
 
   useEffect(() => {
     Sound.setCategory('Playback');
-    requestPermissions();
+    // requestPermissions();
 
     if (audioPath) {
       loadAudio(audioPath);
@@ -43,20 +44,20 @@ const AudioPlayer = ({ audioPath }) => {
     };
   }, [audioPath]);
 
-  const requestPermissions = async () => {
-    try {
-      if (Platform.OS === 'android') {
-        const result = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-        if (result !== RESULTS.GRANTED) {
-          Alert.alert('Permission required', 'Storage permission is required to play audio files');
-        }
-      } else {
-        console.log('iOS - no storage permission required');
-      }
-    } catch (error) {
-      console.error('Permission request failed:', error);
-    }
-  };
+  // const requestPermissions = async () => {
+  //   try {
+  //     if (Platform.OS === 'android') {
+  //       const result = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
+  //       if (result !== RESULTS.GRANTED) {
+  //         Alert.alert('Permission required', 'Storage permission is required to play audio files');
+  //       }
+  //     } else {
+  //       console.log('iOS - no storage permission required');
+  //     }
+  //   } catch (error) {
+  //     console.error('Permission request failed:', error);
+  //   }
+  // };
 
   const loadAudio = (path) => {
     if (sound) {
@@ -155,9 +156,10 @@ const AudioPlayer = ({ audioPath }) => {
       </View>
       <View style={audioPlayerStyles.playerContainer}>
         <View style={audioPlayerStyles.infoContainer}>
-          <Text style={audioPlayerStyles.subtitle} numberOfLines={1}>
+          {/* <Text style={audioPlayerStyles.subtitle} numberOfLines={1}>
             {audioPath ? audioPath.split('/').pop() : 'No file selected'}
-          </Text>
+          </Text> */}
+          <MarqueeText text={audioPath ? audioPath.split('/').pop() : 'No file selected'} style={{ fontWeight: 'normal', fontSize: 14, color: 'white' }} duration={20000}/>
         </View>
         <View style={audioPlayerStyles.progressContainer}>
           <Text style={audioPlayerStyles.timeText}>{formatTime(currentTime)}</Text>

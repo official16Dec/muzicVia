@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StatusBar, TouchableOpacity, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import AudioPlayer from './util/AudioPlayer';
 import { useNavigation } from '@react-navigation/native';
+import Marquee from 'react-native-marquee';
 import MarqueeText from '../marquee/MarqueeText';
 
 type AudioScreenProps = {
@@ -43,7 +44,9 @@ const AudioScreen: React.FC<AudioScreenProps> = ({ route }) => {
             </View>
           </View>
           <View style={styles.subHeader}>
-            {/* <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text> */}
+            {/* <Marquee speed={0.5} direction="left" marqueeOnStart={true} loop={true} style={styles.marqueeText} >
+              <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text>
+            </Marquee> */}
             <MarqueeText text={title} style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }} />
           </View>
           <AudioPlayer audioPath={audioUri} />

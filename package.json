@@ -20,6 +20,7 @@
     "react-native-bootsplash": "^6.3.10",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.28.0",
+    "react-native-marquee": "^0.5.0",
     "react-native-permissions": "^5.4.2",
     "react-native-safe-area-context": "^5.6.0",
     "react-native-screens": "^4.13.1",
